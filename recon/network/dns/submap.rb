@@ -13,7 +13,7 @@ require 'colorize'
 #
 
 @opt = {
-  :list 	=> "/home/n0vo/dev/proj/ruby/dns/submap/data/prefix.lst",
+  :list 	=> "../../../data/prefix.lst",
   :threads	=> 36,
   :servers	=> [ '208.67.222.222', '208.67.220.220' ],
   :verbose 	=> false,
