@@ -13,7 +13,7 @@ require 'colorize'
 #
 
 @opt = {
-  :list 	=> "../../data/prefix.lst",
+  :list 	=> "/home/n0vo/dev/proj/ruby/dns/submap/data/prefix.lst",
   :threads	=> 36,
   :servers	=> [ '208.67.222.222', '208.67.220.220' ],
   :verbose 	=> false,
@@ -93,14 +93,14 @@ class DNS
     end
 
     # let em' know what's going on
-    verbose_output("Checking #{@suffix.to_s.green} for wildcard addresses")
+    verbose("Checking #{@suffix.to_s.green} for wildcard addresses")
     # quit if there is wildcard matching
     unless wildcard_check.empty?
       raise DomainError.new "Wildcard matching exists. Exiting"
     end
 
     # optional verbosity
-    verbose_output("Adding prefixes from #{File.basename(list).to_s.yellow} to a queue")
+    verbose("Adding prefixes from #{File.basename(list).to_s.yellow} to a queue")
 
     # append the domain name to the prefixes and add them to a work queue
     list.each do |x| 
@@ -109,8 +109,8 @@ class DNS
     end
 
     # some more verbosity
-    verbose_output("Using nameservers: " << "#{@resolvers*', '}".red)
-    verbose_output("Bruteforcing #{@suffix.to_s.green} using #{@threads} threads")
+    verbose("Using nameservers: " << "#{@resolvers*', '}".red)
+    verbose("Bruteforcing #{@suffix.to_s.green} using #{@threads} threads")
 
     # create a pool of worker threads
     workers = (0..@threads).map do
@@ -134,7 +134,7 @@ class DNS
     found
   end
 
-  def verbose_output(msg)
+  def verbose(msg)
     print "[#{Time.now.to_s.split[1].magenta}] #{msg}\n" if @verbose
   end
 
@@ -188,7 +188,7 @@ begin
 
   # write to file if specified
   if @opt[:file]
-    dns.verbose_output("Writing results to #{@opt[:file].to_s.yellow}")
+    dns.verbose("Writing results to #{@opt[:file].to_s.yellow}")
 
     File.open(@opt[:file], 'wb') do |f|
       f.puts "# Subdomain bruteforce of #{@opt[:domain]} at #{Time.now.utc}"
@@ -204,7 +204,7 @@ rescue SubMap::DomainError => e
 
   exit 2
 rescue Interrupt
-  puts " aborted".light_red
+  puts " aborted!".light_red
 
   exit 1
 end
