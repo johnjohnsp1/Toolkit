@@ -65,7 +65,7 @@ end
 ## Code module
 #
 
-module Brute
+module SubMap
 # error class
 class DomainError < RuntimeError
   def initialize(msg = "An error occurred")
@@ -181,7 +181,7 @@ end # module
 begin
   # run main
   t1 = Time.now
-  dns = Brute::DNS.new(@opt[:domain], @opt[:list], @opt[:threads], @opt[:verbose], @opt[:servers])
+  dns = SubMap::DNS.new(@opt[:domain], @opt[:list], @opt[:threads], @opt[:verbose], @opt[:servers])
 
   # map out the results
   results = dns.run.map { |k, v| "#{k}  =>  #{v*', '}" }
@@ -199,7 +199,7 @@ begin
 
   # no matter what the results will be printed to stdout
   results.each { |x| puts x.blue }
-rescue Brute::DomainError => e
+rescue SubMap::DomainError => e
   puts "[!] #{e}".light_red
 
   exit 2
