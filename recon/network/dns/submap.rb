@@ -203,6 +203,10 @@ rescue Brute::DomainError => e
   puts "[!] #{e}".light_red
 
   exit 2
+rescue Interrupt
+  puts " aborted".light_red
+
+  exit 1
 end
 
 # final run time
